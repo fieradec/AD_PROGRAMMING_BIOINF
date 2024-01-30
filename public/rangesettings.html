@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>Greenhouse Monitoring</title>
+  <link href="https://fonts.googleapis.com/css2?family=Workbench&display=swap" rel="stylesheet">
+  <style>
+    h2 {font-size: 1.3rem;
+		margin-bottom: 0.2rem;
+		}
+    p {font-size: 1.0rem;
+		margin-bottom: 0.5rem;
+	  }
+    h1 {
+      font-size: 4.0rem;
+      font-family: 'Workbench';
+      color: #646462;
+    }
+</style>
+<style>
+  .slider {
+    width: 100%;
+  }
+
+  body {
+    background-color: #ccccb3;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    
+  }
+
+  .pink-band {
+    height: 150px;
+    background-color: #ffe6f2;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .grey-tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: #646462;
+    padding: 20px 0;
+  }
+
+  .tab {
+    width: 120px;
+    height: 30px;
+    background-color: #A9A9A9;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .tab:hover {
+    background-color: #808080;
+  }
+
+  .content {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+
+  .content>* {
+    padding: 10px;
+  }
+
+  .tab-content {
+    color: #333;
+    font-size: 16px;
+  }
+
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .writing-box {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    width: 400px;
+    height: 400px;
+    margin-top: 20px;
+    line-height: 200%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .toggle-container {
+    text-align: center;
+  }
+
+  .toggle-btn {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .toggle-input {
+    display: none;
+  }
+
+  .sliderApple {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+
+  .sliderApple:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  .toggle-input:checked+.sliderApple {
+    background-color: #4CAF50;
+  }
+
+  .toggle-input:checked+.sliderApple:before {
+    transform: translateX(26px);
+  }
+
+  .slider {
+    -webkit-appearance: none;
+    margin: 14px;
+    width: 360px;
+    height: 25px;
+    background: #FFD65C;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 35px;
+    height: 35px;
+    background: #A9A9A9;
+    cursor: pointer;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 35px;
+    height: 35px;
+    background: #A9A9A9;
+    cursor: pointer;
+  }
+
+  .dual-slider {
+    -webkit-appearance: none;
+    margin: 14px;
+    width: 360px;
+    height: 20px;
+    background: #73a579;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  .dual-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #A9A9A9;
+    cursor: pointer;
+  }
+
+  .dual-slider::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    background: #A9A9A9;
+    cursor: pointer;
+  }
+
+  #submitBtn {
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #A9A9A9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  #submitBtn:hover {
+    background-color: #808080;
+  }
+
+  .form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+
+  .form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .form-container label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .form-container input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .form-container input[type="email"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+
+  .form-container select {
+    height: 40px;
+  }
+
+  .form-container input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #A9A9A9;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .form-container input[type="submit"]:hover {
+    background-color: #808080;
+  }
+
+  a:hover,
+  a:visited,
+  a:link,
+  a:active {
+    text-decoration: none;
+    color: unset;
+  }
+</style>
+</head>
+<body>
+  <a href="/">
+    <div class="pink-band"> <h1> GREENGUARDIAN</h1>
+    </div>
+  </a>
+  <div class="grey-tabs" id="header">
+    <div class="tab"> <a href="/home" id="tab1">Home</a></div>
+    <div class="tab"> <a href="/monitor" id="tab2">Monitoring</a></div>
+    <div class="tab"> <a href="/brightness" id="tab3">Brightness</a></div>
+    <div class="tab"> <a href="/ranges" id="tab4">Thresholds</a></div>
+    <div class="tab"> <a href="/contacts" id="tab5">Contacts</a></div>
+  </div>
+  <form action="/updateRange" method="post" id="rangeValues">
+  <!-- Temperature Range Sliders -->
+  <div class="center-container">
+    <h2>Temperature Range</h2>
+    <p><span id="textSliderValueTempMin">%TEMPMINVALUE%</span> - <span id="textSliderValueTempMax">%TEMPMAXVALUE%</span></p>
+    <input type="range" oninput="updateDualSlider(this, 'Temp', 'Min')" name="sliderTempMin" id="sliderTempMin" min="0" max="60" value="%TEMPMINVALUE%" step="0.1" class="dual-slider">
+    <input type="range" oninput="updateDualSlider(this, 'Temp', 'Max')" name="sliderTempMax" id="sliderTempMax" min="0" max="60" value="%TEMPMAXVALUE%" step="0.1" class="dual-slider">
+  </div>
+
+  <!-- Humidity Range Sliders -->
+  <div class="center-container">
+    <h2>Humidity Range</h2>
+    <p><span id="textSliderValueHumMin">%HUMMINVALUE%</span> - <span id="textSliderValueHumMax">%HUMMAXVALUE%</span></p>
+    <input type="range" oninput="updateDualSlider(this, 'Hum', 'Min')" name="sliderHumMin" id="sliderHumMin" min="0" max="100" value="%HUMMINVALUE%" step="0.1" class="dual-slider">
+    <input type="range" oninput="updateDualSlider(this, 'Hum', 'Max')" name="sliderHumMax" id="sliderHumMax" min="0" max="100" value="%HUMMAXVALUE%" step="0.1" class="dual-slider">
+  </div>
+
+  <!-- Submit Button -->
+  <div class="center-container">
+	<input type="submit" id="submitBtn" value="Submit"/>
+  </div>
+</form>
+  <script>
+    function updateDualSlider(element, type, position) {
+      var sliderValue = element.value;
+      document.getElementById("textSliderValue" + type + position).innerHTML = sliderValue;
+      console.log(type + " " + position + " Range: " + sliderValue);
+    }
+
+  </script>
+
+</body>
+</html>
+

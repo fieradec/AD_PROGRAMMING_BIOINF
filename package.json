@@ -1,0 +1,21 @@
+{
+  "name": "adv_programming",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.8",
+    "querystring": "^0.2.1",
+    "serialport": "^12.0.0",
+    "socket.io": "^4.7.4",
+    "sqlite3": "^5.1.7"
+  }
+}
