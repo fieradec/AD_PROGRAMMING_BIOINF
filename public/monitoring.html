@@ -6,8 +6,12 @@
   <!-- Include necessary libraries and stylesheets -->
   <link href="https://fonts.googleapis.com/css2?family=Workbench&display=swap" rel="stylesheet">
   <style>
-    h2 {font-size: 1.5rem;}
-    p {font-size: 1.1rem;}
+    h2 {font-size: 1.3rem;
+		margin-bottom: 0.2rem;
+		}
+    p {font-size: 1.0rem;
+		margin-bottom: 0.5rem;
+	  }
     h1 {
       font-size: 4.0rem;
       font-family: 'Workbench';
@@ -291,7 +295,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Real-Time Monitoring System</title>
+  <title>Greenhouse Monitoring</title>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet"
@@ -322,8 +326,8 @@
 
       // Initialize the charts for light, temperature, and humidity
       createChart('Light intensity', 'ligth', 'light-container', 0, 100, '#ff0066');
-      createChart('Temperature', 'temp', 'temperature-container', -10, 60, '#0033cc');
-      createChart('Humidity', 'humi', 'humidity-container', -10, 110, '#ff9900');
+      createChart('Temperature', 'temperature', 'temperature-container', -10, 60, '#0033cc');
+      createChart('Humidity', 'humidity', 'humidity-container', -10, 110, '#ff9900');
     }
 
     function createChart(title, seriesName, containerId, minY, maxY, settedColor) {

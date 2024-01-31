@@ -7,17 +7,9 @@ const { ReadlineParser } = require('@serialport/parser-readline');
 var querystring = require("querystring");
 const bodyParser = require('body-parser');
 const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
 const nodemailer = require('nodemailer');
 
-const db = new sqlite3.Database('./py4bio.db', (err) => {
-  if (err) {
-    console.error(err.message);
-    response.status(500).send('An error occurred while processing the form.');
-    return;
-  }
-  console.log('Connected to the SQLite database.');
-});
+const db = require('./database');
 
 var socketServer;
 var portName = 'COM10'; // change this to your Arduino port
@@ -105,7 +97,7 @@ function serialListener(debug) {
     var readData = "";  // this stores the buffer
     var cleanTemp = ""; // this stores the clean data
     var cleanHum = ""; // this stores the clean data
-    var cleanLigh = "";
+    var cleanLigh = ""; // this stores the clean data
 
     serialPort.on('data', function (data) {
       readData += data.toString(); // append data to buffer
@@ -119,14 +111,14 @@ function serialListener(debug) {
       if (readData.indexOf("D") >= 0 && readData.indexOf("C") >= 0) {
         cleanTemp = readData.substring(readData.indexOf("C") + 1, readData.indexOf("D"));
         temperature = parseFloat(cleanTemp);
-        SocketIO_serialemit(temperature, "temp");
+        SocketIO_serialemit(temperature, "temperature");
         alarmSender('temperature', temperature);
       }
 
       if (readData.indexOf("F") >= 0 && readData.indexOf("E") >= 0) {
         cleanHum = readData.substring(readData.indexOf("E") + 1, readData.indexOf("F"));
         humidity = parseFloat(cleanHum);
-        SocketIO_serialemit(humidity, "humi");
+        SocketIO_serialemit(humidity, "humidity");
         alarmSender('humidity', humidity);
       }
       readData = "";
@@ -192,7 +184,7 @@ function alarmSender(measure, value) {
             from: 'federica.commisso.2000@gmail.com',
             to: emailDataset,
             subject: 'Sensor Alarm',
-            text: 'Hello, check the sensors and greenhouse. Detected problem: ' + datetime + ", " + emailtext,
+            text: 'Hello, check the sensors and greenhouse. Problem detected: ' + datetime + ", " + emailtext,
           };
         
           // Send the email

@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
 
+const db = require('./database');
+
 function start(response) {
   console.log("Request handler 'start' was called.");
 
@@ -102,15 +104,6 @@ function checkContactExists(db, name, surname, callback) {
 function updateForm(response, postData) {
   console.log("Request handler 'form contacts;' was called.");
 
-  const db = new sqlite3.Database('./py4bio.db', (err) => {
-    if (err) {
-      console.error(err.message);
-      response.status(500).send('An error occurred while processing the form.');
-      return;
-    }
-    console.log('Connected to the SQLite database.');
-  });
-
   // Perform different actions based on the selected action
   switch (postData.action) {
     case 'add':
@@ -182,26 +175,11 @@ function updateForm(response, postData) {
   }
 
   // Close the connection to the database
-  db.close((err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Close the database connection.');
     contacts(response);
-  });
 }
 
 function updateRange(response, postData) {
   console.log("Request handler 'upload' was called.");
-  
-  const db = new sqlite3.Database('./py4bio.db', (err) => {
-    if (err) {
-      console.error(err.message);
-      res.status(500).send('An error occurred while processing the form.');
-      return;
-    }
-    console.log('Connected to the SQLite database.');
-  });
 
   const updateValues = (measure, max, min) => {
     const checkQuery = "SELECT maximum, minimum FROM range WHERE measure = ?";
@@ -244,13 +222,9 @@ function updateRange(response, postData) {
 	}
 
   // Close the connection to the database
-  db.close((err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Close the database connection.');
+
     thresholds(response);
-  });
+
 }
 
 exports.start = start;
